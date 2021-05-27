@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+
 public class MazeCreatorController {
     public TextField textField_mazeRows;
     public TextField textField_mazeCols;
@@ -36,6 +40,9 @@ public class MazeCreatorController {
             }
 
             value=(String) choiseBox_type.getValue();
+            OutputStream output = new FileOutputStream("./resources/config.properties");
+            Properties prop = new Properties();
+            prop.setProperty("mazeGeneratingAlgorithm", value);
 
             if (value==null)
             {

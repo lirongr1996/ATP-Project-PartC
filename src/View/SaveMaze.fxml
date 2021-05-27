@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:controller="View.SaveMazeController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Enter the name for the file">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="30.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="textField_name" maxWidth="-Infinity" promptText="File Name">
+         <VBox.margin>
+            <Insets left="25.0" top="10.0" />
+         </VBox.margin></TextField>
+      <Button mnemonicParsing="false" onAction="#SaveFile" text="Save">
+         <VBox.margin>
+            <Insets left="75.0" top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>
