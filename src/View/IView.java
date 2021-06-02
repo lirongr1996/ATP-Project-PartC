@@ -1,4 +1,4 @@
 package View;
 
-public interface IView {
+public interface IView{
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" fx:controller="View.SoundController" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="28.0" layoutY="18.0" prefHeight="17.0" prefWidth="57.0" text="Volume :" />
+      <Slider layoutX="78.0"  fx:id="slider_volume" layoutY="13.0" prefHeight="28.0" prefWidth="144.0" />
+      <CheckBox layoutX="28.0" layoutY="41.0" fx:id="checkBox_mute" onAction="#MuteVolume" mnemonicParsing="false" text="Mute" />
+   </children>
+</Pane>

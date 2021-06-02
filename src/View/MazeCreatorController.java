@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -17,20 +18,19 @@ public class MazeCreatorController {
     public TextField textField_mazeRows;
     public TextField textField_mazeCols;
     public ChoiceBox choiseBox_type;
-    public MazeData data;
     public MyViewController control;
+    private MyViewModel myViewModel;
 
     public void GenerateMaze(ActionEvent actionEvent) {
         int rows=0;
         int cols=0;
         String value;
-        data=new MazeData();
         control=new MyViewController();
         Maze maze;
         try {
             rows = Integer.valueOf(textField_mazeRows.getText());
             cols = Integer.valueOf(textField_mazeCols.getText());
-            if (rows<1 || cols<1)
+            if (rows<=1 || cols<=1)
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Oh no , i cant be created :(" +System.lineSeparator()+"Please choose a size for me"
@@ -38,27 +38,29 @@ public class MazeCreatorController {
                         System.lineSeparator()+"By the way zero is not positive number");
                 alert.show();
             }
-
-            value=(String) choiseBox_type.getValue();
-            OutputStream output = new FileOutputStream("./resources/config.properties");
-            Properties prop = new Properties();
-            prop.setProperty("mazeGeneratingAlgorithm", value);
-
-            if (value==null)
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Oh no , i cant be created :(" +System.lineSeparator()+"Please choose a type for me");
-                alert.show();
-            }
             else {
-                data.createMaze(rows,cols,value);
-              //  Parent homeP= FXMLLoader.load(getClass().getResource("MyView.fxml"));
-             //   Scene homeS=new Scene(homeP);
-             //   Stage stage=(Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-              //  stage.hide();
-              //  stage.setScene(homeS);
-              // stage.show();
-                ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+                value = (String) choiseBox_type.getValue();
+                OutputStream output = new FileOutputStream("./resources/config.properties");
+                Properties prop = new Properties();
+                if (value.equals("Empty Maze"))
+                    prop.setProperty("mazeGeneratingAlgorithm", "EmptyMazeGenerator");
+                if (value.equals("Simple Maze"))
+                    prop.setProperty("mazeGeneratingAlgorithm", "SimpleMazeGenerator");
+                if (value.equals("Complex Maze"))
+                    prop.setProperty("mazeGeneratingAlgorithm", "MyMazeGenerator");
+                prop.setProperty("threadPoolSize", "3");
+                prop.setProperty("mazeSearchingAlgorithm", "BestFirstSearch");
+                prop.store(output, null);
+
+                if (value == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Oh no , i cant be created :(" + System.lineSeparator() + "Please choose a type for me");
+                    alert.show();
+                } else {
+                    myViewModel=MyViewModel.getInstance();
+                    myViewModel.createGame(rows, cols, value);
+                    ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+                }
             }
         }
         catch (Exception e)

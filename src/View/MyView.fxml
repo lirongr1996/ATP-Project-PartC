@@ -5,7 +5,7 @@
 
 <?import View.MazeDisplayer?>
 <?import javafx.geometry.Insets?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<BorderPane onMouseClicked="#mouseClicked" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
@@ -20,13 +20,18 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Properties" />
+                                <MenuItem mnemonicParsing="false" onAction="#ShowProperties" text="Properties" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help" />
                         <Menu mnemonicParsing="false"  text="About" >
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#Info" text="About" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Setting" >
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#ChangeSound" text="sound" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exit" >
@@ -42,7 +47,7 @@
     <center>
         <Pane BorderPane.alignment="CENTER">
             <children>
-                <MazeDisplayer fx:id="mazeDisplayer" height="300.0" width="300.0" />
+                <MazeDisplayer fx:id="mazeDisplayer" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNameWall="./resources/images/forest.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" onKeyPressed="#keyPressed" height="500.0" width="500.0" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -1,15 +1,18 @@
 package View;
 
+import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.*;
+import java.util.Properties;
 
 public class SaveMazeController {
 
     public TextField textField_name;
+    private MyViewModel myViewModel;
 
 
     public void SaveFile(ActionEvent actionEvent) {
@@ -30,7 +33,13 @@ public class SaveMazeController {
             {
                 FileOutputStream newFile=new FileOutputStream("./resources/MazeFile/"+name);
                 ObjectOutputStream outObject = new ObjectOutputStream(newFile);
-                outObject.writeObject(MazeData.maze);
+                myViewModel=MyViewModel.getInstance();
+                outObject.writeObject(myViewModel.getGame());
+                InputStream input =new FileInputStream(("./resources/config.properties"));
+                Properties prop = new Properties();
+                prop.load(input);
+                String type=prop.getProperty("mazeGeneratingAlgorithm");
+                outObject.writeObject(type);
                 ((Node)actionEvent.getSource()).getScene().getWindow().hide();
             }
             else

@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -8,14 +9,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class LoadMazeController implements Initializable {
     public TreeView treeView_files;
+    private MyViewModel myViewModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,7 +54,17 @@ public class LoadMazeController implements Initializable {
                         break;
                 }
                 ObjectInputStream intObject=new ObjectInputStream(new FileInputStream(files[i]));
-                MazeData.maze=(Maze)intObject.readObject();
+                myViewModel=MyViewModel.getInstance();
+                myViewModel.LoadGame(intObject.readObject());
+                String type=(String)intObject.readObject();
+
+                OutputStream output = new FileOutputStream("./resources/config.properties");
+                Properties prop = new Properties();
+                prop.setProperty("threadPoolSize", "3");
+                prop.setProperty("mazeSearchingAlgorithm", "BestFirstSearch");
+                prop.setProperty("mazeGeneratingAlgorithm", type);
+                prop.store(output, null);
+
                 ((Node)actionEvent.getSource()).getScene().getWindow().hide();
             }
         }catch (Exception e)
