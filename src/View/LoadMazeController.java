@@ -11,10 +11,12 @@ import javafx.scene.control.TreeView;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class LoadMazeController implements Initializable {
+public class LoadMazeController extends AView implements Initializable {
     public TreeView treeView_files;
     private MyViewModel myViewModel;
 
@@ -54,9 +56,9 @@ public class LoadMazeController implements Initializable {
                         break;
                 }
                 ObjectInputStream intObject=new ObjectInputStream(new FileInputStream(files[i]));
-                myViewModel=MyViewModel.getInstance();
                 myViewModel.LoadGame(intObject.readObject());
                 String type=(String)intObject.readObject();
+                myViewModel.setSolution(intObject.readObject());
 
                 OutputStream output = new FileOutputStream("./resources/config.properties");
                 Properties prop = new Properties();
@@ -73,5 +75,15 @@ public class LoadMazeController implements Initializable {
             alert.setContentText("   ");
             alert.show();
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        myViewModel=viewModel;
     }
 }

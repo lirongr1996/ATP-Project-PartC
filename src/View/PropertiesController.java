@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.MyViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.Initializable;
@@ -11,10 +12,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class PropertiesController implements Initializable {
+public class PropertiesController extends AView implements Initializable {
     public Label mazeType;
     public Label mazeSolver;
 
@@ -59,5 +62,15 @@ public class PropertiesController implements Initializable {
 
     public StringProperty updateSolverProperty() {
         return updateSolver;
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        this.myViewModel=viewModel;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

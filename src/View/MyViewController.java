@@ -3,60 +3,103 @@ package View;
 import ViewModel.MyViewModel;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.SwipeEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 
-public class MyViewController implements IView, Initializable {
+public class MyViewController extends  AView implements Initializable {
     public MazeDisplayer mazeDisplayer;
-    private MyViewModel myViewModel;
+    public MenuItem menuItem_solve;
+    public Pane pane;
+    public BorderPane borderPane;
+    public AnchorPane aPane;
+    public ScrollPane scrollPane;
+    public ImageView imageView;
     private Media media;
     private MediaPlayer player;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            pane.prefWidthProperty().bind(scrollPane.widthProperty());
+            pane.prefHeightProperty().bind((scrollPane.heightProperty()));
+            mazeDisplayer.widthProperty().bind(aPane.widthProperty());
+            mazeDisplayer.heightProperty().bind(aPane.heightProperty());
+
+            aPane.heightProperty().addListener(e->{
+                if (myViewModel!=null)
+                    mazeDisplayer.drawMaze(myViewModel.getGame());
+            });
+            aPane.widthProperty().addListener(e->{
+                if (myViewModel!=null)
+                    mazeDisplayer.drawMaze(myViewModel.getGame());
+            });
+
+            menuItem_solve.setDisable(true);
             media = new Media(getClass().getResource("/music/Harry Potter Theme Song.mp3").toURI().toString());
             player= new MediaPlayer(media);
             player.play();
 
+
+
+
+            pane.setOnScroll(new EventHandler<ScrollEvent>() {
+                @Override
+                public void handle(ScrollEvent event) {
+                    double zoomFactor = 1.05;
+                    double deltaY = event.getDeltaY();
+
+                    if (deltaY < 0){
+                        zoomFactor = 0.95;
+                    }
+                    pane.setScaleX(pane.getScaleX() * zoomFactor);
+                    pane.setScaleY(pane.getScaleY() * zoomFactor);
+                    event.consume();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     public void CreateMaze(ActionEvent actionEvent) {
-        myViewModel=MyViewModel.getInstance();
         myViewModel.LoadGame(null);
         try {
-            Parent homeP= FXMLLoader.load((getClass().getResource("MazeCreator.fxml")));
-            Scene homeS=new Scene(homeP);
-            Stage stage=new Stage();
-            stage.hide();
-            stage.setScene(homeS);
-            stage.showAndWait();
-            if(myViewModel.getGame()!=null) {
-                player.stop();
-                media = new Media(getClass().getResource("/music/Harry's Wondrous World.mp3").toURI().toString());
-                player = new MediaPlayer(media);
-                player.setVolume(0.1);
-                player.play();
-            }
-            mazeDisplayer.drawMaze();
-            mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+            moveFXML("MazeCreator.fxml");
         }
         catch (Exception e)
         {
@@ -73,24 +116,18 @@ public class MyViewController implements IView, Initializable {
 
     public void Info(ActionEvent event) {
         try {
-                    Parent homeP= FXMLLoader.load((getClass().getResource("About.fxml")));
-                    Scene homeS=new Scene(homeP);
-                    Stage stage=new Stage();
-                    stage.hide();
-                    stage.setScene(homeS);
-                    stage.showAndWait();
-                }
-                catch (Exception e)
-                {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("not working");
-                    alert.show();
-                }
-            }
+            moveFXML("About.fxml");
+        }
+        catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("not working");
+            alert.show();
+        }
+    }
 
 
     public void SaveMaze(ActionEvent actionEvent) {
-        myViewModel=MyViewModel.getInstance();
         if (myViewModel.getGame()==null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -99,12 +136,7 @@ public class MyViewController implements IView, Initializable {
         }
         else {
             try {
-                Parent homeP = FXMLLoader.load((getClass().getResource("SaveMaze.fxml")));
-                Scene homeS = new Scene(homeP);
-                Stage stage = new Stage();
-                stage.hide();
-                stage.setScene(homeS);
-                stage.showAndWait();
+                moveFXML("SaveMaze.fxml");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("not working");
@@ -123,22 +155,7 @@ public class MyViewController implements IView, Initializable {
         }
         else {
             try {
-                myViewModel=MyViewModel.getInstance();
-                Parent homeP = FXMLLoader.load((getClass().getResource("LoadMaze.fxml")));
-                Scene homeS = new Scene(homeP);
-                Stage stage = new Stage();
-                stage.hide();
-                stage.setScene(homeS);
-                stage.showAndWait();
-                if (myViewModel.getGame()==null) {
-                    player.stop();
-                    media = new Media(getClass().getResource("/music/Harry's Wondrous World.mp3").toURI().toString());
-                    player = new MediaPlayer(media);
-                    player.setVolume(0.1);
-                    player.play();
-                }
-                mazeDisplayer.drawMaze();
-                mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+                moveFXML("LoadMaze.fxml");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("not working");
@@ -148,7 +165,6 @@ public class MyViewController implements IView, Initializable {
     }
 
     public void ShowProperties(ActionEvent actionEvent) {
-        myViewModel=MyViewModel.getInstance();
         if (myViewModel.getGame()==null){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("No properties available.");
@@ -156,12 +172,7 @@ public class MyViewController implements IView, Initializable {
         }
         else {
             try {
-                Parent homeP = FXMLLoader.load((getClass().getResource("Properties.fxml")));
-                Scene homeS = new Scene(homeP);
-                Stage stage = new Stage();
-                stage.hide();
-                stage.setScene(homeS);
-                stage.showAndWait();
+                moveFXML("Properties.fxml");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("not working");
@@ -175,47 +186,134 @@ public class MyViewController implements IView, Initializable {
     }
 
     public void keyPressed(KeyEvent keyEvent) {
-        myViewModel=MyViewModel.getInstance();
-        boolean win=mazeDisplayer.setPlayerPosition(myViewModel.setPositionPlayer(keyEvent));
+        myViewModel.setPositionPlayer(keyEvent);
         keyEvent.consume();
-        try {
-            if (win)
-            {
-                player.stop();
-                Parent homeP = FXMLLoader.load((getClass().getResource("WinGame.fxml")));
-                Scene homeS = new Scene(homeP);
-                Stage stage = new Stage();
-                stage.hide();
-                stage.setScene(homeS);
-                stage.showAndWait();
-                myViewModel.LoadGame(null);
-                mazeDisplayer.drawMaze();
-                media = new Media(getClass().getResource("/music/Harry Potter Theme Song.mp3").toURI().toString());
-                player= new MediaPlayer(media);
-                player.play();
-            }
-        }
-        catch (Exception e)
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("not working");
-            alert.showAndWait();
-        }
-
     }
 
     public void ChangeSound(ActionEvent actionEvent) {
         try {
-            Parent homeP = FXMLLoader.load((getClass().getResource("Properties.fxml")));
-            Scene homeS = new Scene(homeP);
-            Stage stage = new Stage();
-            stage.hide();
-            stage.setScene(homeS);
-            stage.showAndWait();
+            moveFXML("Properties.fxml");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("not working");
             alert.showAndWait();
         }
     }
+
+    public void ShowSolution(ActionEvent actionEvent) {
+        mazeDisplayer.isSolutionTrue();
+        myViewModel.solveGame();
+    }
+
+    public void MouseDrag(MouseEvent mouseEvent) {
+        myViewModel.setPositionPlayer(mouseEvent);
+        mouseEvent.consume();
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        this.myViewModel=viewModel;
+        this.myViewModel.addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        String change=(String) arg;
+        switch (change)
+        {
+            case "game created":
+                MazeCreated();
+                break;
+            case "player move":
+                PlayerMoved();
+                break;
+            case "solve game":
+                solveGame();
+                break;
+            case "game loaded":
+                LoadGame();
+                break;
+            case "wall":
+                break;
+            case "win":
+                PlayerWin();
+                break;
+        }
+    }
+
+
+    private void PlayerWin() {
+        try {
+            mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+            player.stop();
+            moveFXML("WinGame.fxml");
+            myViewModel.LoadGame(null);
+            mazeDisplayer.drawHomePage();
+            menuItem_solve.setDisable(true);
+            mazeDisplayer.isSolutionFalse();
+            media = new Media(getClass().getResource("/music/Harry Potter Theme Song.mp3").toURI().toString());
+            player= new MediaPlayer(media);
+            player.play();
+        }catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("not working");
+            alert.showAndWait();
+        }
+    }
+
+    private void LoadGame() {
+        try {
+            if (myViewModel.getGame()!=null) {
+                player.stop();
+                media = new Media(getClass().getResource("/music/Harry's Wondrous World.mp3").toURI().toString());
+                player = new MediaPlayer(media);
+                player.setVolume(0.1);
+                player.play();
+            }
+            mazeDisplayer.drawMaze(myViewModel.getGame());
+            menuItem_solve.setDisable(false);
+            mazeDisplayer.isSolutionFalse();
+            mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+        }catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("not found the sound");
+            alert.showAndWait();
+        }
+    }
+
+    private void solveGame() {
+        mazeDisplayer.setSolution(myViewModel.getSolution());
+        mazeDisplayer.drawMaze(myViewModel.getGame());
+    }
+
+    private void PlayerMoved() {
+        mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+    }
+
+    private void MazeCreated() {
+        try {
+            if(myViewModel.getGame()!=null) {
+                player.stop();
+                media = new Media(getClass().getResource("/music/Harry's Wondrous World.mp3").toURI().toString());
+                player = new MediaPlayer(media);
+                mazeDisplayer.isSolutionFalse();
+                player.setVolume(0.1);
+                player.play();
+            }
+            mazeDisplayer.drawMaze(myViewModel.getGame());
+            menuItem_solve.setDisable(false);
+            mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+            myViewModel.setStratPR(mazeDisplayer.getPositionH(myViewModel.getPositionPlayer()));
+            myViewModel.setstratPC(mazeDisplayer.getPositionW(myViewModel.getPositionPlayer()));
+        }
+        catch ( Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("not found the sound");
+            alert.showAndWait();
+        }
+    }
+
 }

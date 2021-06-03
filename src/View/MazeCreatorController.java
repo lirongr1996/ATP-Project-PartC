@@ -12,9 +12,11 @@ import javafx.stage.Stage;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 
-public class MazeCreatorController {
+public class MazeCreatorController extends AView {
     public TextField textField_mazeRows;
     public TextField textField_mazeCols;
     public ChoiceBox choiseBox_type;
@@ -57,7 +59,6 @@ public class MazeCreatorController {
                     alert.setContentText("Oh no , i cant be created :(" + System.lineSeparator() + "Please choose a type for me");
                     alert.show();
                 } else {
-                    myViewModel=MyViewModel.getInstance();
                     myViewModel.createGame(rows, cols, value);
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                 }
@@ -79,6 +80,17 @@ public class MazeCreatorController {
                 alert.show();
             }
         }
+
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        myViewModel=viewModel;
+        this.myViewModel.addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
 
     }
 }

@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.MyViewModel;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,9 +10,10 @@ import javafx.scene.media.MediaView;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class WinGameController implements Initializable {
+public class WinGameController extends AView implements Initializable {
     public MediaView mediaView;
     public ImageView imageView;
     private Media media;
@@ -30,6 +32,16 @@ public class WinGameController implements Initializable {
             e.printStackTrace();
         }
 
+
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        this.myViewModel=viewModel;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
 
     }
 }

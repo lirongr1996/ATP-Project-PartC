@@ -1,10 +1,14 @@
 package View;
 
+import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 
-public class SoundController {
+import java.util.Observable;
+import java.util.Observer;
+
+public class SoundController extends AView {
 
     public Slider slider_volume;
     public CheckBox checkBox_mute;
@@ -14,5 +18,15 @@ public class SoundController {
         {
 
         }
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        this.myViewModel=viewModel;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

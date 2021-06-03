@@ -1,57 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import View.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<?import View.MazeDisplayer?>
-<?import javafx.geometry.Insets?>
-<BorderPane onMouseClicked="#mouseClicked" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
-    <top>
-        <VBox BorderPane.alignment="CENTER">
+<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" onMouseDragged="#MouseDrag" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+
+    <VBox BorderPane.alignment="CENTER">
+        <children>
+            <StackPane>
+                <children>
+                    <MenuBar>
+                        <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#CreateMaze" text="New" />
+                                    <MenuItem mnemonicParsing="false" onAction="#SaveMaze" text="Save" />
+                                    <MenuItem mnemonicParsing="false" onAction="#LoadMaze" text="Load" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Options">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#ShowProperties" text="Properties" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Help">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text="help" />
+                                    <MenuItem fx:id="menuItem_solve" mnemonicParsing="false" onAction="#ShowSolution" text="solve" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="About">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#Info" text="About" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Setting">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeSound" text="sound" />
+                                </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Exit">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#ExitFromTheProgram" text="Exit" />
+                                </items>
+                            </Menu>
+                        </menus>
+                    </MenuBar>
+                </children>
+            </StackPane>
+        </children>
+    </VBox>
+
+    <ScrollPane fx:id="scrollPane" layoutY="26.0" prefHeight="574.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" BorderPane.alignment="CENTER">
+        <Pane fx:id="pane" pickOnBounds="false" prefHeight="561.0" prefWidth="600.0">
             <children>
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#CreateMaze" text="New" />
-                                <MenuItem mnemonicParsing="false" onAction="#SaveMaze" text="Save" />
-                                <MenuItem mnemonicParsing="false" onAction="#LoadMaze" text="Load" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Options">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ShowProperties" text="Properties" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help" />
-                        <Menu mnemonicParsing="false"  text="About" >
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#Info" text="About" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Setting" >
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ChangeSound" text="sound" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Exit" >
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ExitFromTheProgram" text="Exit" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
-        </VBox>
-    </top>
-    <center>
-        <Pane BorderPane.alignment="CENTER">
-            <children>
-                <MazeDisplayer fx:id="mazeDisplayer" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNameWall="./resources/images/forest.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" onKeyPressed="#keyPressed" height="500.0" width="500.0" />
+                <MazeDisplayer fx:id="mazeDisplayer" height="561.0" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameSolution="./resources/images/lomus.jpg" imageFileNameWall="./resources/images/forest.jpg" onKeyPressed="#keyPressed" width="600.0" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </Pane>
-    </center>
-</BorderPane>
+    </ScrollPane>
+
+
+</AnchorPane>

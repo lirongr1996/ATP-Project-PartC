@@ -7,9 +7,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.*;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 
-public class SaveMazeController {
+public class SaveMazeController extends AView {
 
     public TextField textField_name;
     private MyViewModel myViewModel;
@@ -33,13 +35,13 @@ public class SaveMazeController {
             {
                 FileOutputStream newFile=new FileOutputStream("./resources/MazeFile/"+name);
                 ObjectOutputStream outObject = new ObjectOutputStream(newFile);
-                myViewModel=MyViewModel.getInstance();
                 outObject.writeObject(myViewModel.getGame());
                 InputStream input =new FileInputStream(("./resources/config.properties"));
                 Properties prop = new Properties();
                 prop.load(input);
                 String type=prop.getProperty("mazeGeneratingAlgorithm");
                 outObject.writeObject(type);
+                outObject.writeObject(myViewModel.getSolution());
                 ((Node)actionEvent.getSource()).getScene().getWindow().hide();
             }
             else
@@ -54,5 +56,15 @@ public class SaveMazeController {
             alert.setContentText("   ");
             alert.show();
         }
+    }
+
+    @Override
+    public void setViewModel(MyViewModel viewModel) {
+        this.myViewModel=viewModel;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
