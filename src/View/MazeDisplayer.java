@@ -1,20 +1,16 @@
 package View;
-import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.*;
 import algorithms.search.AState;
-import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MazeDisplayer extends Canvas {
@@ -48,15 +44,16 @@ public class MazeDisplayer extends Canvas {
 
     }
 
-    public double getPositionH (Object position)
+    public double[] getPosition (Object position)
     {
-        return getHeight()/maze.getRow()*((Position)position).getRowIndex();
+        double[] arr= new double[4];
+        arr[0]= getHeight()/maze.getRow()*((Position)position).getRowIndex();
+        arr[1]= getWidth()/maze.getCol()*((Position)position).getColumnIndex();
+        arr[2]=getHeight()/maze.getRow()+arr[0];
+        arr[3]=getWidth()/maze.getCol()+arr[1];
+        return arr;
     }
 
-    public double getPositionW (Object position)
-    {
-        return getWidth()/maze.getCol()*((Position)position).getColumnIndex();
-    }
 
     public void drawMaze (Object game)
     {

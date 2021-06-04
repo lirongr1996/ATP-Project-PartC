@@ -3,15 +3,11 @@ package Model;
 import Client.*;
 import IO.MyDecompressorInputStream;
 import Server.*;
-import View.MazeDisplayer;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.Solution;
 import javafx.scene.control.Alert;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -24,11 +20,18 @@ public class MyModel extends Observable implements IModel{
     private Maze maze;
     private Position player;
     private ArrayList<AState> mazeSolutionSteps;
-    private double x;
+    private double [] x;
     private double y;
 
+    public double [] getX() {
+        return x;
+    }
 
-    public void createGame(int row,int col, String type) {
+    public double getY() {
+        return y;
+    }
+
+    public void createGame(int row, int col, String type) {
         Server mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         mazeGeneratingServer.start();
         CommunicateWithServer_MazeGenerating(row,col);
@@ -260,8 +263,8 @@ public class MyModel extends Observable implements IModel{
     }
 
     @Override
-    public void setRow(double positionH) {
-        x=positionH;
+    public void setRow(double [] position) {
+        x=position;
     }
 
     @Override

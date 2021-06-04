@@ -17,7 +17,8 @@ public interface IModel {
     public void setSolutionPath(Object p);
     public void assignObserver(Observer o);
 
-    void setRow(double positionH);
-
+    void setRow(double[] positionH);
     void setCol(double positionW);
+    public double []getX();
+    public double getY();
 }

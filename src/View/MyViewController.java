@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
@@ -44,20 +46,20 @@ public class MyViewController extends  AView implements Initializable {
     public MazeDisplayer mazeDisplayer;
     public MenuItem menuItem_solve;
     public Pane pane;
-    public BorderPane borderPane;
     public AnchorPane aPane;
     public ScrollPane scrollPane;
     public ImageView imageView;
     private Media media;
     private MediaPlayer player;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             pane.prefWidthProperty().bind(scrollPane.widthProperty());
             pane.prefHeightProperty().bind((scrollPane.heightProperty()));
-            mazeDisplayer.widthProperty().bind(aPane.widthProperty());
-            mazeDisplayer.heightProperty().bind(aPane.heightProperty());
+            mazeDisplayer.widthProperty().bind(pane.widthProperty());
+            mazeDisplayer.heightProperty().bind(pane.heightProperty());
 
             aPane.heightProperty().addListener(e->{
                 if (myViewModel!=null)
@@ -73,7 +75,13 @@ public class MyViewController extends  AView implements Initializable {
             player= new MediaPlayer(media);
             player.play();
 
-
+            mazeDisplayer.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (myViewModel!=null)
+                        myViewModel.setPositionPlayer(event, mazeDisplayer.getHeight(),mazeDisplayer.getWidth());
+                }
+            });
 
 
             pane.setOnScroll(new EventHandler<ScrollEvent>() {
@@ -205,10 +213,6 @@ public class MyViewController extends  AView implements Initializable {
         myViewModel.solveGame();
     }
 
-    public void MouseDrag(MouseEvent mouseEvent) {
-        myViewModel.setPositionPlayer(mouseEvent);
-        mouseEvent.consume();
-    }
 
     @Override
     public void setViewModel(MyViewModel viewModel) {
@@ -275,6 +279,7 @@ public class MyViewController extends  AView implements Initializable {
             menuItem_solve.setDisable(false);
             mazeDisplayer.isSolutionFalse();
             mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+            myViewModel.setStratPR(mazeDisplayer.getPosition(myViewModel.getPositionPlayer()));
         }catch (Exception e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -290,6 +295,7 @@ public class MyViewController extends  AView implements Initializable {
 
     private void PlayerMoved() {
         mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
+        myViewModel.setStratPR(mazeDisplayer.getPosition(myViewModel.getPositionPlayer()));
     }
 
     private void MazeCreated() {
@@ -305,8 +311,7 @@ public class MyViewController extends  AView implements Initializable {
             mazeDisplayer.drawMaze(myViewModel.getGame());
             menuItem_solve.setDisable(false);
             mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
-            myViewModel.setStratPR(mazeDisplayer.getPositionH(myViewModel.getPositionPlayer()));
-            myViewModel.setstratPC(mazeDisplayer.getPositionW(myViewModel.getPositionPlayer()));
+            myViewModel.setStratPR(mazeDisplayer.getPosition(myViewModel.getPositionPlayer()));
         }
         catch ( Exception e)
         {

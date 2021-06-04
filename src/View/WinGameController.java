@@ -25,8 +25,11 @@ public class WinGameController extends AView implements Initializable {
             //player = new MediaPlayer(media);
             //player.setAutoPlay(true);
             //mediaView.setMediaPlayer(player);
-            Image i = new Image(getClass().getResource("MediocreObeseHoverfly-size_restricted.gif").toString());
-            imageView.setImage(i);
+            Image image= new Image("./resources/MediocreObeseHoverfly-size_restricted.gif");
+
+            imageView.setImage(image);
+
+
         }catch (Exception e)
         {
             e.printStackTrace();

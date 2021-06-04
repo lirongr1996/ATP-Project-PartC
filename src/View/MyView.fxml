@@ -2,11 +2,11 @@
 
 <?import View.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" onMouseDragged="#MouseDrag" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" prefHeight="600.0" prefWidth="600.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
 
     <VBox BorderPane.alignment="CENTER">
         <children>
@@ -55,15 +55,18 @@
     </VBox>
 
     <ScrollPane fx:id="scrollPane" layoutY="26.0" prefHeight="574.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" BorderPane.alignment="CENTER">
-        <Pane fx:id="pane" pickOnBounds="false" prefHeight="561.0" prefWidth="600.0">
-            <children>
-                <MazeDisplayer fx:id="mazeDisplayer" height="561.0" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameSolution="./resources/images/lomus.jpg" imageFileNameWall="./resources/images/forest.jpg" onKeyPressed="#keyPressed" width="600.0" />
-            </children>
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-        </Pane>
-    </ScrollPane>
+        <content>
+            <Group>
+                <Pane fx:id="pane" pickOnBounds="false" prefHeight="560.0" prefWidth="580.0">
+                    <children>
+                        <MazeDisplayer fx:id="mazeDisplayer" height="560.0" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameSolution="./resources/images/lomus.jpg" imageFileNameWall="./resources/images/forest.jpg" onKeyPressed="#keyPressed" width="580.0" />
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </Pane>
+            </Group>
+        </content></ScrollPane>
 
 
 </AnchorPane>

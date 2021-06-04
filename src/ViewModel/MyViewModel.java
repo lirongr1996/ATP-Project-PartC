@@ -115,19 +115,36 @@ public class MyViewModel extends Observable implements Observer {
         game.SolveGame();
     }
 
-    public void setPositionPlayer(MouseEvent mouseEvent)
+    public void setPositionPlayer(MouseEvent mouseEvent, double h,double w)
     {
-        MovementDirection d=MovementDirection.DL;
-        int row=((Position)game.getPositionPlayer()).getRowIndex();
-        int col=((Position)game.getPositionPlayer()).getColumnIndex();
+        MovementDirection d;
+        double[] p=game.getX();
         int [][]m=((Maze)game.getGame()).getTwoDMaze();
-        row+=mouseEvent.getX();
-        col+=mouseEvent.getY();
+        double newRow=mouseEvent.getY();
+        double newCol=mouseEvent.getX();
+        if (newCol>=p[1] && newCol<=p[3] && newRow>=p[0]&& newRow<=p[2])
+            return;
+        if (newRow<p[0] && newCol<p[1])
+            d=MovementDirection.UL;
+        else if (newRow<p[0] && newCol>=p[1] && newCol<=p[3])
+            d=MovementDirection.UP;
+        else if (newRow<p[0] && newCol>p[3])
+            d=MovementDirection.UR;
+        else if (newRow>=p[0]&& newRow<=p[2] && newCol<p[1])
+            d=MovementDirection.LEFT;
+        else if (newRow>=p[0]&& newRow<=p[2] && newCol>p[3])
+            d=MovementDirection.RIGHT;
+        else if (newRow>p[2] && newCol<p[1])
+            d=MovementDirection.DL;
+        else if (newRow>p[2] && newCol>=p[1] && newCol<=p[3])
+            d=MovementDirection.DOWN;
+        else //if (newRow>row && newCol>col)
+            d=MovementDirection.DR;
 
         game.setPositionPlayer(d);
     }
 
-    public void setStratPR(double positionH) {
+    public void setStratPR(double[] positionH) {
         game.setRow(positionH);
     }
 
