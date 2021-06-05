@@ -1,9 +1,30 @@
 .root {
+    -fx-dark-text-color: navy;
+    -fx-mid-text-color: blue;
+    -fx-light-text-color: lightskyblue;
+}
 
+.menu-bar {
+    -fx-text-fill: #1c88b5;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.5;
+}
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
+    -fx-background: -fx-accent;
+    -fx-background-color: darkslategray;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.menu-item:focused{
+    -fx-background-color: darkslategray;
+}
+
+.menu-item .label{
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b8ebe;
 }
 
 Pane {
-    -fx-background-image: url("/images/forest.jpg");
+    -fx-background-image: url("/images/homePage.jpg");
     -fx-background-size: 100% 100%;
 }
 

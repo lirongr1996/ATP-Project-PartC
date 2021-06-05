@@ -115,15 +115,17 @@ public class MyViewModel extends Observable implements Observer {
         game.SolveGame();
     }
 
-    public void setPositionPlayer(MouseEvent mouseEvent, double h,double w)
+    public void setPositionPlayer(MouseEvent mouseEvent)
     {
         MovementDirection d;
         double[] p=game.getX();
-        int [][]m=((Maze)game.getGame()).getTwoDMaze();
         double newRow=mouseEvent.getY();
         double newCol=mouseEvent.getX();
+        double[] goal=game.getGoalPosition();
         if (newCol>=p[1] && newCol<=p[3] && newRow>=p[0]&& newRow<=p[2])
             return;
+        //if (newCol>=goal[1] && newCol<=goal[3] && newRow>=goal[0]&& newRow<=goal[2])
+        //    return;
         if (newRow<p[0] && newCol<p[1])
             d=MovementDirection.UL;
         else if (newRow<p[0] && newCol>=p[1] && newCol<=p[3])
@@ -148,7 +150,7 @@ public class MyViewModel extends Observable implements Observer {
         game.setRow(positionH);
     }
 
-    public void setstratPC(double positionW) {
+    public void setGoalPostion(double[] positionW) {
         game.setCol(positionW);
     }
 
@@ -157,5 +159,6 @@ public class MyViewModel extends Observable implements Observer {
         setChanged();
         notifyObservers(arg);
     }
+
 
 }

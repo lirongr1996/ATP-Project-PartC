@@ -1,0 +1,11 @@
+.root {
+    -fx-background-image: url("/MediocreObeseHoverfly-size_restricted.gif");
+}
+
+Label {
+    -fx-font-size: 30px;
+    -fx-border-radius: 20%;
+    -fx-text-fill: #3cdbdb;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}

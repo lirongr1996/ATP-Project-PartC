@@ -16,9 +16,9 @@ public interface IModel {
     public void SolveGame();
     public void setSolutionPath(Object p);
     public void assignObserver(Observer o);
+    public double[] getGoalPosition();
 
     void setRow(double[] positionH);
-    void setCol(double positionW);
+    void setCol(double [] positionW);
     public double []getX();
-    public double getY();
 }

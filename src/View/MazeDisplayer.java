@@ -20,6 +20,7 @@ public class MazeDisplayer extends Canvas {
     StringProperty imageFileNameGoal=new SimpleStringProperty();
     StringProperty imageFileNamePlayerWin=new SimpleStringProperty();
     StringProperty imageFileNameSolution=new SimpleStringProperty();
+    StringProperty imageFileNameHomePage=new SimpleStringProperty();
     private int playerRow;
     private int playerCol;
     private int goalRow;
@@ -42,6 +43,16 @@ public class MazeDisplayer extends Canvas {
         this.playerCol = ((Position)position).getColumnIndex();
         draw();
 
+    }
+
+    public double[] getGoalPosition()
+    {
+        double[] arr= new double[4];
+        arr[0]= getHeight()/maze.getRow()*goalRow;
+        arr[1]= getWidth()/maze.getCol()*goalCol;
+        arr[2]=getHeight()/maze.getRow()+arr[0];
+        arr[3]=getWidth()/maze.getCol()+arr[1];
+        return  arr;
     }
 
     public double[] getPosition (Object position)
@@ -97,7 +108,7 @@ public class MazeDisplayer extends Canvas {
         Image homeImage = null;
         try {
             GraphicsContext graphicsContext = getGraphicsContext2D();
-            homeImage = new Image(new FileInputStream(getImageFileNameWall()));
+            homeImage = new Image(new FileInputStream(getImageFileNameHomePage()));
             graphicsContext.drawImage(homeImage,0,0,getWidth(),getHeight());
         }
         catch (Exception e)
@@ -279,5 +290,18 @@ public class MazeDisplayer extends Canvas {
 
     public void setImageFileNameSolution(String imageFileNameSolution) {
         this.imageFileNameSolution.set(imageFileNameSolution);
+    }
+
+
+    public String getImageFileNameHomePage() {
+        return imageFileNameHomePage.get();
+    }
+
+    public String imageFileNameHomePage() {
+        return imageFileNameHomePage.get();
+    }
+
+    public void setImageFileNameHomePage(String imageFileNameHomePage) {
+        this.imageFileNameHomePage.set(imageFileNameHomePage);
     }
 }

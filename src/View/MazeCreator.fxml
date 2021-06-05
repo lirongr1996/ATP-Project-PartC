@@ -8,7 +8,7 @@
 <?import com.sun.deploy.uitoolkit.impl.fx.ui.FXDefaultPreloader.FXPreloaderPane?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="256.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MazeCreatorController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Style.css" prefHeight="238.0" prefWidth="256.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MazeCreatorController">
     <children>
         <Label text="Choose The Maze That You Want To Create">
             <font>

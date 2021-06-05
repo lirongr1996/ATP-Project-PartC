@@ -69,7 +69,7 @@ public class AboutTextAnimation extends Canvas {
     {
         GraphicsContext g2d=getGraphicsContext2D();
         g2d.clearRect(0, 0, getWidth(), getHeight());
-        g2d.setFill(Color.RED);
+        g2d.setFill(Color.WHITE);
         g2d.fillText(str,x,y);
     }
 }

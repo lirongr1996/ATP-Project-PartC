@@ -2,6 +2,7 @@ package View;
 
 import ViewModel.MyViewModel;
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -31,6 +32,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,6 +53,8 @@ public class MyViewController extends  AView implements Initializable {
     public ImageView imageView;
     private Media media;
     private MediaPlayer player;
+    private Media mWall;
+    private MediaPlayer pWall;
 
 
     @Override
@@ -79,7 +83,7 @@ public class MyViewController extends  AView implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     if (myViewModel!=null)
-                        myViewModel.setPositionPlayer(event, mazeDisplayer.getHeight(),mazeDisplayer.getWidth());
+                        myViewModel.setPositionPlayer(event);
                 }
             });
 
@@ -198,15 +202,6 @@ public class MyViewController extends  AView implements Initializable {
         keyEvent.consume();
     }
 
-    public void ChangeSound(ActionEvent actionEvent) {
-        try {
-            moveFXML("Properties.fxml");
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("not working");
-            alert.showAndWait();
-        }
-    }
 
     public void ShowSolution(ActionEvent actionEvent) {
         mazeDisplayer.isSolutionTrue();
@@ -238,6 +233,18 @@ public class MyViewController extends  AView implements Initializable {
                 LoadGame();
                 break;
             case "wall":
+                try {
+                    player.pause();
+                    mWall = new Media(getClass().getResource("/music/wall.mp3").toURI().toString());
+                    pWall = new MediaPlayer(mWall);
+                    pWall.play();
+                    player.play();
+                }catch (Exception e)
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The music not working");
+                    alert.showAndWait();
+                }
                 break;
             case "win":
                 PlayerWin();
@@ -251,6 +258,7 @@ public class MyViewController extends  AView implements Initializable {
             mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
             player.stop();
             moveFXML("WinGame.fxml");
+
             myViewModel.LoadGame(null);
             mazeDisplayer.drawHomePage();
             menuItem_solve.setDisable(true);
@@ -312,6 +320,7 @@ public class MyViewController extends  AView implements Initializable {
             menuItem_solve.setDisable(false);
             mazeDisplayer.setPlayerPosition(myViewModel.getPositionPlayer());
             myViewModel.setStratPR(mazeDisplayer.getPosition(myViewModel.getPositionPlayer()));
+            myViewModel.setGoalPostion(mazeDisplayer.getGoalPosition());
         }
         catch ( Exception e)
         {
@@ -321,4 +330,13 @@ public class MyViewController extends  AView implements Initializable {
         }
     }
 
+    public void Help(ActionEvent actionEvent) {
+        try {
+            moveFXML("Help.fxml");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("not working");
+            alert.showAndWait();
+        }
+    }
 }

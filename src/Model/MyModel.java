@@ -21,14 +21,10 @@ public class MyModel extends Observable implements IModel{
     private Position player;
     private ArrayList<AState> mazeSolutionSteps;
     private double [] x;
-    private double y;
+    private double [] y;
 
     public double [] getX() {
         return x;
-    }
-
-    public double getY() {
-        return y;
     }
 
     public void createGame(int row, int col, String type) {
@@ -263,12 +259,17 @@ public class MyModel extends Observable implements IModel{
     }
 
     @Override
+    public double[] getGoalPosition() {
+        return y;
+    }
+
+    @Override
     public void setRow(double [] position) {
         x=position;
     }
 
     @Override
-    public void setCol(double positionW) {
+    public void setCol(double [] positionW) {
         y=positionW;
     }
 }

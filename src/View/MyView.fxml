@@ -6,13 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" prefHeight="600.0" prefWidth="600.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" prefHeight="440.0" prefWidth="700.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
 
     <VBox BorderPane.alignment="CENTER">
         <children>
             <StackPane>
                 <children>
-                    <MenuBar>
+                    <MenuBar prefHeight="25.0" prefWidth="700.0">
                         <menus>
                             <Menu mnemonicParsing="false" text="File">
                                 <items>
@@ -28,18 +28,13 @@
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="help" />
+                                    <MenuItem mnemonicParsing="false" onAction="#Help" text="help" />
                                     <MenuItem fx:id="menuItem_solve" mnemonicParsing="false" onAction="#ShowSolution" text="solve" />
                                 </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="About">
                                 <items>
                                     <MenuItem mnemonicParsing="false" onAction="#Info" text="About" />
-                                </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Setting">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#ChangeSound" text="sound" />
                                 </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Exit">
@@ -55,18 +50,18 @@
     </VBox>
 
     <ScrollPane fx:id="scrollPane" layoutY="26.0" prefHeight="574.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" BorderPane.alignment="CENTER">
-        <content>
+      <content>
             <Group>
-                <Pane fx:id="pane" pickOnBounds="false" prefHeight="560.0" prefWidth="580.0">
+                <Pane fx:id="pane" layoutY="-9.0" pickOnBounds="false" prefHeight="401.0" prefWidth="689.0">
                     <children>
-                        <MazeDisplayer fx:id="mazeDisplayer" height="560.0" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameSolution="./resources/images/lomus.jpg" imageFileNameWall="./resources/images/forest.jpg" onKeyPressed="#keyPressed" width="580.0" />
+                        <MazeDisplayer fx:id="mazeDisplayer" height="403.0" imageFileNameGoal="./resources/images/voldemort.jpg" imageFileNameHomePage="./resources/images/homePage.jpg" imageFileNamePlayer="./resources/images/harryPotter.jpg" imageFileNamePlayerWin="./resources/images/harryPotterWin.jpg" imageFileNameSolution="./resources/images/lomus.jpg" imageFileNameWall="./resources/images/forest.jpg" layoutY="-3.0" onKeyPressed="#keyPressed" width="688.0" />
                     </children>
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </Pane>
             </Group>
-        </content></ScrollPane>
+      </content></ScrollPane>
 
 
 </AnchorPane>
