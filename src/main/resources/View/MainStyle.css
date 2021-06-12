@@ -1,0 +1,51 @@
+.root {
+    -fx-dark-text-color: navy;
+    -fx-mid-text-color: blue;
+    -fx-light-text-color: lightskyblue;
+}
+
+.menu-bar {
+    -fx-text-fill: #1c88b5;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.5;
+}
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
+    -fx-background: -fx-accent;
+    -fx-background-color: darkslategray;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.menu-item:focused{
+    -fx-background-color: darkslategray;
+}
+
+.menu-item .label{
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b8ebe;
+}
+
+Pane {
+    -fx-background-image: url("/Images/homePage.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+
+/*
+Button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+}*/
+
+/*
+Button:hover {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; *//* 4 8 4 8 *//*
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+*/
